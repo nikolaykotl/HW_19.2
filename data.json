@@ -1,0 +1,1 @@
+[{"model": "catalog.category", "pk": 1, "fields": {"category_name": "Телевизоры, спутниковое и цифровое ТВ", "description_cat": "Все для просмотра ТВ"}}, {"model": "catalog.category", "pk": 2, "fields": {"category_name": "Ноутбуки и компьютеры", "description_cat": "Ноутбуки и компьютеры"}}]
