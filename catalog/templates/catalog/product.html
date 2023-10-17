@@ -2,26 +2,23 @@
 {% load tags %}
 {% block content %}
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          {% for object in object_list %}
-        <div class="col">
+  <div class="col">
           <div class="card shadow-sm">
             <img class="card-img-top"
-                 crs = "{{ object.picture|media }}"
-                 alt="Card image cap"/>
+                 data-crs = "{{ object.picture|media }}"
+                 alt="Card image cap">
             <div class="card-body">
-              <p class="card-text">Товар: {{ object.product_name }}</p>
-              <p class="card-text">Описание: {{ object.description_prod|slice:100}}</p>
+              <p class="card-text">Товар: {{ object.product_name }} </p>
+              <p class="card-text">Описание: {{ object.description_prod }}</p>
               <p class="card-text">Цена: {{ object.purchase_price }} руб.</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-outline-secondary">Купить</button>
-                 <a <button type="button" class="btn btn-sm btn-outline-success" href="{% url 'catalog:product' object.pk %}">Просмотр товара</button></a>
                 </div>
                 <small class="text-body-secondary"></small>
               </div>
             </div>
           </div>
-        </div>
-          {% endfor %}
   </div>
-      {% endblock %}
+</div>
+{% endblock %}

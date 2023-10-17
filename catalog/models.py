@@ -6,13 +6,15 @@ class Product(models.Model):
     product_name = models.CharField(max_length=150, verbose_name='название продукта')
     description_prod = models.TextField(verbose_name='описание', **NULLABLE)
     category = models.ForeignKey('Category', on_delete=models.PROTECT)
-    picture = models.ImageField(verbose_name='изображение', **NULLABLE)
+    picture = models.ImageField(upload_to='catalog/',verbose_name='изображение', **NULLABLE)
     purchase_price = models.FloatField(verbose_name='стоимость покупки', **NULLABLE)
     date_creation =models.DateField(verbose_name='дата создания', **NULLABLE)
     date_change = models.DateField(verbose_name='дата изменения', **NULLABLE)
 
     def __str__(self):
-        return f'{self.id} {self.product_name}, описание {self.description_prod}, цена: {self.purchase_price}, дата создания: {self.date_creation}, дата изменения: {self.date_change}'
+        return f'{self.product_name};\n' \
+               f'Описание: {self.description_prod}\n' \
+               f'Цена: {self.purchase_price}'
 
     class Meta:
         verbose_name = 'продукт'
