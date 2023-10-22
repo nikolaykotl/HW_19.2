@@ -1,7 +1,6 @@
 from django.contrib import admin
 
 from catalog.models import Product, Category
-from post.models import Post
 
 
 #admin.site.register(Product)
@@ -12,6 +11,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'product_name', 'purchase_price', 'category', )
     list_filter = ('category',)
     search_fields = ('product_name', 'description_prod', )
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'category_name')
