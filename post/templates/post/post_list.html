@@ -1,0 +1,28 @@
+{% extends 'catalog/base.html' %}
+{% load tags %}
+{% block content %}
+<a  class="btn btn-sm btn-outline-success" href="{% url 'post:create' %}">Добавить статью</a>
+<p></p>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {% for object in object_list %}
+        <div class="col">
+          <div class="card shadow-sm">
+             <div class="card-body">
+              <p class="card-text">{{ object.title }}</p>
+                 <p class="card-text">{{ object.body|slice:150 }}</p>
+                 <p class="card-text">{{ object.create_date}}</p>
+                 <p class="card-text">{{ object.views_count }}</p>
+                   <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                <a <button type="button" class="btn btn btn-outline-success" href="{% url 'post:view' object.pk %}">Прочитать</button></a>
+                <a <button type="button" class="btn btn-sm btn-outline-warning" href="{% url 'post:edit' object.pk %}">Редактировать</button></a>
+                <a <button type="button" class="btn btn-sm btn-outline-danger" href="{% url 'post:delete' object.pk %}">Удалить</button></a>
+                </div>
+                <small class="text-body-secondary"></small>
+              </div>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+  </div>
+      {% endblock %}

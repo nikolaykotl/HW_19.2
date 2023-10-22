@@ -1,0 +1,23 @@
+{% extends 'catalog/base.html' %}
+{% load tags %}
+{% block content %}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+  <div class="col">
+"{{ object.title }}" ({{ object.slug }})
+    <div class="card shadow-sm">
+            <img class="card-img-top"
+                 data-crs = "{{ object.post|media }}"
+                 alt="Card image cap">
+            <div class="card-body">
+              <p class="card-text">{{ object.body }}</p>
+              <p class="card-text">{{ object.create_date }}</p>
+              <p class="card-text">Просмотры: {{ object.views_count }}</p>
+                 <div class="d-flex justify-content-between align-items-center">
+                         </div>
+                <small class="text-body-secondary"></small>
+              </div>
+            </div>
+          </div>
+  </div>
+</div>
+{% endblock %}
