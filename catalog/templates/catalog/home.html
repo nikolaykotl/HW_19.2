@@ -1,6 +1,8 @@
 {% extends 'catalog/base.html' %}
 {% load tags %}
 {% block content %}
+<a  class="btn btn-sm btn-outline-success" href="{% url 'catalog:create_product' %}">Добавить товар</a>
+<p></p>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           {% for object in object_list %}
         <div class="col">
@@ -16,6 +18,7 @@
                 <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-outline-secondary">Купить</button>
                  <a <button type="button" class="btn btn-sm btn-outline-success" href="{% url 'catalog:product' object.pk %}">Просмотр товара</button></a>
+                    <a <button type="button" class="btn btn-sm btn-outline-info" href="{% url 'catalog:update_product' object.pk %}">Изменить</button></a>
                 </div>
                 <small class="text-body-secondary"></small>
               </div>
