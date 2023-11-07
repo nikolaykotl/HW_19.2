@@ -4,15 +4,34 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from catalog.forms import ProductForm, VersionForm
 from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
+#from django.utils.decorators import method_decorator
+#from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from users.mixins import UserRequiredMixin
 
-class ProductCreateView(CreateView):
+
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:home')
-class ProductUpdateView(UpdateView):
+    login_url = 'catalog:home'
+
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.owner = self.request.user
+        self.object.save()
+
+        return super().form_valid(form)
+
+
+#@method_decorator(login_required(login_url='users:register'), name='dispatch')
+class ProductUpdateView(UserRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:home')
+    login_url = 'catalog:home'
+    success_message = 'Успешно изменено'
 
     def get_form_class(self):
         return super().get_form_class()
@@ -35,6 +54,7 @@ class ProductUpdateView(UpdateView):
             formset.save()
 
         return super().form_valid(form)
+
 
 def contacts(request):
     if request.method == 'POST':

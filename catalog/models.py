@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from config import settings
+
 NULLABLE = {'blank': True, 'null': True}
 class Product(models.Model):
     product_name = models.CharField(max_length=180, verbose_name='название продукта')
@@ -11,6 +13,8 @@ class Product(models.Model):
     purchase_price = models.FloatField(verbose_name='стоимость покупки', **NULLABLE)
     date_creation =models.DateField(auto_now_add=True, verbose_name='дата создания', **NULLABLE)
     date_change = models.DateField(auto_now_add=True, verbose_name='дата изменения', **NULLABLE)
+
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='владелец')
 
     def __str__(self):
         return f'{self.product_name};\n' \

@@ -1,0 +1,1 @@
+[{"model": "post.post", "pk": 3, "fields": {"title": "Тест", "body": "Текст ntrcn", "image": "", "create_date": "2023-10-22", "is_public": true, "views_count": 3, "slug": "test"}}, {"model": "post.post", "pk": 4, "fields": {"title": "Тест 1", "body": "Текст Текст", "image": "", "create_date": "2023-10-22", "is_public": true, "views_count": 2, "slug": "test-1"}}]
