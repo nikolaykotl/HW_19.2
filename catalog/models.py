@@ -1,3 +1,5 @@
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -16,6 +18,8 @@ class Product(models.Model):
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='владелец')
 
+    is_published = models.BooleanField(default=False, verbose_name='опубликовано')
+
     def __str__(self):
         return f'{self.product_name};\n' \
                f'Описание: {self.description_prod}\n' \
@@ -25,6 +29,22 @@ class Product(models.Model):
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
         ordering = ('product_name',)
+
+    permissions = [
+        (
+            'set_is_published',
+            'Can published'
+        ),
+        (
+            'set_description_prod',
+            'Can description'
+        ),
+        (
+            'set_category',
+            'Can category_product'
+        )
+
+    ]
 
 class Category(models.Model):
     category_name = models.CharField(max_length=100, verbose_name='название категории')

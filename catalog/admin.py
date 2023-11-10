@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+
 from catalog.models import Product, Category, Version
 
 
@@ -8,9 +9,21 @@ from catalog.models import Product, Category, Version
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'product_name', 'purchase_price', 'category', )
-    list_filter = ('category',)
-    search_fields = ('product_name', 'description_prod', )
+    list_display = ('id', 'product_name', 'purchase_price', 'category', 'description_prod', 'is_published', )
+    list_filter = ('category','is_published',)
+    search_fields = ('product_name', 'description_prod', 'is_published',)
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        if request.user.is_superuser:
+            return form
+
+        elif request.user.is_staff:
+            form.base_fields['product_name'].disabled = True
+            form.base_fields['purchase_price'].disabled = True
+            form.base_fields['owner'].disabled = True
+            return form
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

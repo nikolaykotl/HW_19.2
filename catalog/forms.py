@@ -7,12 +7,20 @@ class StyleFormMixin:
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
-class ProductForm(StyleFormMixin, forms.ModelForm):
+class ProductForm(StyleFormMixin, forms.ModelForm, ):
 
     class Meta:
         model = Product
         exclude = ('owner',)
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        is_staff = request.user.is_staff
+        if is_staff:
+            form.base_fields['product_name'].disabled = True
+            form.base_fields['purchase_price'].disabled = True
+            form.base_fields['owner'].disabled = True
+            return form
 
     def clean_product_name(self):
         words = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']

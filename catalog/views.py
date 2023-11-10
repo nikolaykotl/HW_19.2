@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from catalog.models import Product, Category, Version
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from catalog.forms import ProductForm, VersionForm
 from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
+#from django.http import Http404
+from django.contrib.auth.mixins import PermissionRequiredMixin
 #from django.utils.decorators import method_decorator
 #from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
@@ -25,13 +27,13 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-#@method_decorator(login_required(login_url='users:register'), name='dispatch')
-class ProductUpdateView(UserRequiredMixin, SuccessMessageMixin, UpdateView):
+class ProductUpdateView(UserRequiredMixin, SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:home')
     login_url = 'catalog:home'
     success_message = 'Успешно изменено'
+    permission_required = 'catalog.change_product'
 
     def get_form_class(self):
         return super().get_form_class()
