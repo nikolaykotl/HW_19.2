@@ -11,6 +11,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from users.mixins import UserRequiredMixin
+from catalog.servises import get_cache_category_list
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -100,9 +101,15 @@ class ProductDetailView(DetailView):
 class CategoryListView(ListView):
     model = Category
     template_name = 'catalog/category.html'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['category'] = get_cache_category_list()
+        return context_data
 def category(request):
     content = {
         'category_list': Category.objects.all(),
         'title': 'Категории товаров'
     }
     return render(request, 'catalog/category.html', content)
+
